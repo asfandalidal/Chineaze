@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    id ("kotlin-kapt")
 }
 
 android {
@@ -59,6 +60,16 @@ dependencies {
     debugImplementation(libs.androidx.compose.ui.test.manifest)
     implementation("androidx.compose.material3:material3:1.3.0")
     implementation("androidx.navigation:navigation-compose:2.8.0")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.33.0")
+    // Room components
+    implementation ("androidx.room:room-runtime:2.6.1")
+    kapt ("androidx.room:room-compiler:2.6.1")
+    // Kotlin Extensions and Coroutines support for Room
+    implementation ("androidx.room:room-ktx:2.6.1")
+    // Lifecycle scope
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")
+    implementation ("androidx.lifecycle:lifecycle-livedata-ktx:2.7.0")
+    // Coroutine support
+    implementation ("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
+
 
 }
