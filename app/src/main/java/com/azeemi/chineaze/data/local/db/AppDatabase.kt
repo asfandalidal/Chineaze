@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 import com.azeemi.chineaze.data.local.dao.VocabDao
 import com.azeemi.chineaze.domain.model.Vocabulary
 
-@Database(entities = [Vocabulary::class], version = 1)
+@Database(entities = [Vocabulary::class], version = 2)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun vocabDao(): VocabDao
 
@@ -20,7 +20,8 @@ abstract class AppDatabase : RoomDatabase() {
                     context.applicationContext,
                     AppDatabase::class.java,
                     "chineaze_db"
-                ).build()
+
+                ).fallbackToDestructiveMigration().build()
                 INSTANCE = instance
                 instance
             }

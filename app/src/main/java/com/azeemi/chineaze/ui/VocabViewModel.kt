@@ -8,27 +8,21 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class VocabViewModel(private val repo: VocabRepository) : ViewModel() {
 
-    private val _words = MutableStateFlow<List<Vocabulary>>(emptyList())
-    val words: StateFlow<List<Vocabulary>> = _words
+class VocabViewModel(
+    private val repo: VocabRepository
+) : ViewModel() {
 
-    private val _loading = MutableStateFlow(false)
-    val loading: StateFlow<Boolean> = _loading
-
-    fun loadAll() {
-        viewModelScope.launch {
-            _loading.value = true
-            _words.value = repo.getAllWords()
-            _loading.value = false
-        }
-    }
+    private val _vocabList = MutableStateFlow<List<Vocabulary>>(emptyList())
+    val vocabList: StateFlow<List<Vocabulary>> = _vocabList
 
     fun loadModule(moduleId: Int) {
         viewModelScope.launch {
-            _loading.value = true
-            _words.value = repo.getWordsByModule(moduleId)
-            _loading.value = false
+            repo.getWordsByModule(moduleId).collect { words ->
+                _vocabList.value = words
+            }
         }
     }
 }
+
+
