@@ -40,16 +40,21 @@ object CategoryData {
 
 
 object ModuleMapping {
-
     const val COUNTRIES = 1
+    const val FRUITS = 2
     const val NUMBERS = 3
     const val LANGUAGES = 4
+    const val ANIMALS = 5
+    const val BODYPARTS = 6
 
     fun csvFor(moduleId: Int): String? {
         return when (moduleId) {
             COUNTRIES -> "countries-list.csv"
+            FRUITS -> "fruits.csv"
             NUMBERS -> "chinese_numbers.csv"
             LANGUAGES -> "languages.csv"
+            ANIMALS -> "animals.csv"
+            BODYPARTS -> "body_parts.csv"
             else -> null
         }
     }

@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.material3.CardDefaults
@@ -59,31 +60,56 @@ fun CategoryCard(
     category: ChineseCategory,
     onClick: () -> Unit
 ) {
+    // Improved Material 3 Tonal Palette
+    val containerColor = when(category.id) {
+        1 -> Color(0xFFFFDAD4) // Light Red/Coral
+        2 -> Color(0xFFD1E8D1) // Soft Sage Green
+        3 -> Color(0xFFD0E4FF) // Soft Sky Blue
+        4 -> Color(0xFFF2D7FF) // Soft Lavender
+        5 -> Color(0xFFFFDCC0) // Soft Peach/Brown
+        6 -> Color(0xFF99F2EA) // Soft Cyan
+        else -> Color(0xFFFFF1AC) // Soft Yellow
+    }
+
+    val contentColor = when(category.id) {
+        1 -> Color(0xFF410002)
+        2 -> Color(0xFF002105)
+        else -> Color(0xFF1C1B1F)
+    }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .height(160.dp)
+            .height(160.dp) // Adjusted height for better grid balance
             .clickable(onClick = onClick),
-        shape = RoundedCornerShape(16.dp),
-        elevation = CardDefaults.cardElevation(6.dp)
+        shape = RoundedCornerShape(28.dp), // Modern M3 rounding
+        colors = CardDefaults.cardColors(
+            containerColor = containerColor,
+            contentColor = contentColor
+        ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 0.dp, pressedElevation = 4.dp)
     ) {
         Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(12.dp),
+            modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Center
         ) {
-            Image(
-                painter = painterResource(category.iconRes),
-                contentDescription = category.title,
-                modifier = Modifier.size(64.dp)
-            )
+            Surface(
+                modifier = Modifier.size(72.dp),
+                shape = CircleShape,
+                color = Color.White.copy(alpha = 0.4f)
+            ) {
+                Image(
+                    painter = painterResource(category.iconRes),
+                    contentDescription = null,
+                    modifier = Modifier.padding(16.dp)
+                )
+            }
             Spacer(Modifier.height(12.dp))
             Text(
                 text = category.title,
-                fontWeight = FontWeight.Bold,
-                fontSize = 18.sp
+                style = MaterialTheme.typography.titleMedium,
+                fontWeight = FontWeight.Bold
             )
         }
     }
